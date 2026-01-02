@@ -100,6 +100,22 @@ async fn main() -> tide::Result<()> {
     .execute(&pool)
     .await?;
 
+    sqlx::query(
+        r#"
+            CREATE TABLE IF NOT EXISTS chats (
+                chat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                movie_id INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
+                chat TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES users(id),
+                FOREIGN KEY (movie_id) REFERENCES movies(id)
+            )
+            "#,
+    )
+    .execute(&pool)
+    .await?;
+
     let mut app = tide::with_state(pool);
     app.at("/movies").get(get_movies);
 
