@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use sqlx::sqlite::SqlitePool;
 use sqlx::Row;
+use tide::http::headers::HeaderValue;
+use tide::security::CorsMiddleware;
 use tide::{Request, Response, StatusCode};
 
 #[derive(Deserialize)]
@@ -130,6 +132,13 @@ async fn main() -> tide::Result<()> {
     app.at("/chat/:movie_id").get(get_chats);
 
     println!("Server running at http://0.0.0.0:8080");
+
+    let cors = CorsMiddleware::new()
+    .allow_methods("GET, POST, OPTIONS".parse::<HeaderValue>().unwrap())
+    .allow_origin("*") // Mengizinkan semua akses untuk development
+    .allow_credentials(false);
+
+    app.with(cors);
 
     app.listen("0.0.0.0:8080").await?;
     Ok(())
