@@ -131,7 +131,7 @@ async fn main() -> tide::Result<()> {
 
     app.at("/chat/:movie_id").get(get_chats);
 
-    println!("Server running at http://0.0.0.0:8080");
+    println!("Server running at http://0.0.0.0:8081");
 
     let cors = CorsMiddleware::new()
     .allow_methods("GET, POST, OPTIONS".parse::<HeaderValue>().unwrap())
@@ -140,7 +140,7 @@ async fn main() -> tide::Result<()> {
 
     app.with(cors);
 
-    app.listen("0.0.0.0:8080").await?;
+    app.listen("0.0.0.0:8081").await?;
     Ok(())
 }
 
