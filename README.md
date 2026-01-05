@@ -12,7 +12,7 @@ dengan Endpoint berikut:
 Contoh Command : 
 ```bash
 curl -X GET http://bebasdah.theokaitou.my.id/movies
-
+```
 
 2. /chat
 - Method: POST
@@ -31,3 +31,4 @@ curl -X POST http://bebasdah.theokaitou.my.id/chat \
     "user_id": 1,
     "chat": "filem bagus!"
   }'
+```
